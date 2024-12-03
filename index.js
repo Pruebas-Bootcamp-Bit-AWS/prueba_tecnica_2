@@ -1,12 +1,19 @@
-const express = require('express');
+import express from "express";
+import dotenv from 'dotenv';
+import databaseConnection from "./db/config.js";
+
+
+
 const app = express();
-const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('¡Hola, mundo!');
+databaseConnection();
+dotenv.config();
+
+const PORT = process.env.PORT_ENV || 4000;
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+app.listen(PORT, () => {
+    console.log(`[SERVER] El servidor esta corriendo en el puerto http://localhost:${PORT}`);
 });
-
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
-});
-
